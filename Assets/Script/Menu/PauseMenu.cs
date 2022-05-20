@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     public static bool GameIsPaused = false;
-    public GameObject pauseMenuUI;
+    public GameObject pauseMenuUI, aboutDialog;
 
     // Update is called once per frame
     void Update()
@@ -24,10 +24,21 @@ public class PauseMenu : MonoBehaviour
         
     }
 
+    public void showAboutDialog()
+    {
+        aboutDialog.SetActive(true);
+        pauseMenuUI.SetActive(false);
+    }
+    public void closeAboutDialog()
+    {
+        aboutDialog.SetActive(false);
+        pauseMenuUI.SetActive(true);
+    }
+
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
         GameIsPaused = false;
     }
 
