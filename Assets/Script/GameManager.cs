@@ -35,17 +35,17 @@ public class GameManager : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (maxScore > myScore)
-        {
-            maxScore=myScore;
-        }
         // save game data
         SaveGame();
     }
 		
 	public void GmAddScore(){
 		this.myScore++;
-		myScoreGUI.text = myScore.ToString();
+        if (myScore > maxScore)
+        {
+            maxScore = myScore;
+        }
+        myScoreGUI.text = myScore.ToString();
 		audioSource.Play ();
 	}
 
@@ -92,7 +92,8 @@ public class GameManager : MonoBehaviour {
     public void LoadGame()              //Load First all the variable (Important)
     {
         GameData data = SaveSystem.LoadGame();
-        maxScore = data.Score;
+        maxScore = data.maxScore;
+        //myScore = data.Score;
     }
     //End for LoadGame()
 
