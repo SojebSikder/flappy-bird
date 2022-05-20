@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class DragonScript : MonoBehaviour {
 	 
@@ -8,8 +9,8 @@ public class DragonScript : MonoBehaviour {
 	private float jumpForce;
 	public bool isAlive;
 
-	void Start () {
-		isAlive = true;
+    void Start () {
+        isAlive = true;
 
 		myRigidBody = gameObject.GetComponent<Rigidbody2D>();
 		myAnimator = gameObject.GetComponent<Animator> ();
@@ -24,7 +25,9 @@ public class DragonScript : MonoBehaviour {
 	void Update () {
 		if (isAlive) {
 			if (Input.GetMouseButton (0)) {
-				Flap ();
+                // resume when player ready
+                Time.timeScale = 1f;
+                Flap ();
 			} 
 			CheckIfDragonVisibleOnScreen ();
 		} 
@@ -44,34 +47,26 @@ public class DragonScript : MonoBehaviour {
 		if (target.gameObject.tag == "Obstacles") {
 			isAlive = false;
 			Time.timeScale = 0f;
-		}
+            // game over
+            LoadMenu();
+
+        }
 	}
 
 	void CheckIfDragonVisibleOnScreen() {
 		if (Mathf.Abs(gameObject.transform.position.y) > 5.3f) {
 			isAlive = false;
 			Time.timeScale = 0f;
-		}
+            // game over
+            LoadMenu();
+        }
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public void LoadMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MainMenu");
+    }
 
 }
 

@@ -2,9 +2,10 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class GameManagerScript : MonoBehaviour {
+public class GameManager : MonoBehaviour {
 
 	public int myScore;
+    public int maxScore;
 	public Text myScoreGUI;
 
 	public Transform bottomObstacle,topObstacle;
@@ -14,7 +15,11 @@ public class GameManagerScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		myScore = 0;
+        // in the beginning game will be freeze. to give player proper time to prepare
+        Time.timeScale = 0f;
+
+        myScore = 0;
+        maxScore = 0;
 
 		myScoreGUI = GameObject.Find ("Text")
 			.GetComponent<Text> ();
@@ -23,7 +28,20 @@ public class GameManagerScript : MonoBehaviour {
 
 		audioSource = gameObject.GetComponent<AudioSource> ();
 
+        // load saved game data
+        LoadGame();
 	}
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (maxScore > myScore)
+        {
+            maxScore=myScore;
+        }
+        // save game data
+        SaveGame();
+    }
 		
 	public void GmAddScore(){
 		this.myScore++;
@@ -63,7 +81,21 @@ public class GameManagerScript : MonoBehaviour {
 		}
 	
 	}
-		
+
+
+    //System Function
+    public void SaveGame()
+    {
+        SaveSystem.SaveGame(this);
+    }
+
+    public void LoadGame()              //Load First all the variable (Important)
+    {
+        GameData data = SaveSystem.LoadGame();
+        maxScore = data.Score;
+    }
+    //End for LoadGame()
+
 
 
 }

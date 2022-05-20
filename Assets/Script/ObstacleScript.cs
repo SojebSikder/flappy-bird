@@ -8,7 +8,7 @@ public class ObstacleScript : MonoBehaviour {
 	float dragonXposition;
 	bool isScoreAdded;
 
-	GameManagerScript gameManager;
+	GameManager gameManager;
 
 
 	// Use this for initialization
@@ -22,7 +22,7 @@ public class ObstacleScript : MonoBehaviour {
 		isScoreAdded = false;
 
 		gameManager = GameObject.Find ("GameManager")
-			.GetComponent<GameManagerScript> ();
+			.GetComponent<GameManager> ();
 	}
 
 	void Update() {
